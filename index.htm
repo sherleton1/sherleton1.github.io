@@ -1,0 +1,185 @@
+ <!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<title>KDD Typing Style</title>
+<link rel='stylesheet' href='design.css' type='text/css' />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+	document.addEventListener('DOMContentLoaded', () => {
+	    'use strict';
+
+	    let buffer = [];
+	    let lastKeyTime = Date.now();
+
+	    document.addEventListener('keydown', event => {
+	        const charList = 'abcdefghijklmnopqrstuvwxyz0123456789';
+	        const key = event.key.toLowerCase();
+
+	        // we are only interested in alphanumeric keys
+	        if (charList.indexOf(key) === -1) return;
+
+	        const currentTime = Date.now();
+
+	        buffer.push(key);
+	        lastKeyTime = currentTime;
+
+	        console.log(buffer);
+	    });
+	});
+</script>
+<script type="text/javascript">
+	function EnableDisableTextBox(str) {
+        var txtPassportNumber = document.getElementById(str);
+        txtPassportNumber.removeAttribute("disabled");
+   		pressTime(str);
+   		nextKeyTime(str);
+    }
+    function start(str) {
+    	var txtPassportNumber = document.getElementById(str);
+        txtPassportNumber.removeAttribute("disabled");
+        var minutesLabel = document.getElementById("minutes");
+		var secondsLabel = document.getElementById("seconds");
+		var totalSeconds = 0;
+		setInterval(setTime, 1000);
+
+		function setTime() {
+		  ++totalSeconds;
+		  secondsLabel.innerHTML = pad(totalSeconds % 60);
+		  minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+		}
+
+		function pad(val) {
+		  var valString = val + "";
+		  if (valString.length < 2) {
+		    return "0" + valString;
+		  } else {
+		    return valString;
+		  }
+		}
+		pressTime(str);
+		nextKeyTime(str);
+    }
+
+    function duration(timestamps) {
+        var last = timestamps.pop();
+        var durations = [];
+        while (timestamps.length) {
+            durations.push(last - (last = timestamps.pop()));
+        }
+        return durations.reverse();
+    }
+
+    function display(mills) {
+        if (mills > 1000)
+            return (mills / 1000) + ' s';
+        return mills + ' ms';
+    }
+
+    function pressTime(id) {
+
+		//Intra-key timings
+
+    	var durations = [];
+
+	    $('#'+id).keydown(function (e) {
+	        durations.push($.now());
+	    }).keyup(function (e) {
+	        var current = durations;
+	        current.push($.now());
+	        durations = [];
+	        var timeElapsed = current[current.length - 1] - current[0];
+
+	        console.log([
+	            ['time elapsed:', display(timeElapsed)].join(' '),
+	            ['keys duration:', duration(current).map(display)].join(' ')
+	        ].join(' --- '));
+	    });
+    }
+
+    function nextKeyTime(id) {
+
+    	// Inter-key timings
+
+    	var last;
+    	var output = 0;
+		$('#' + id).on('input', function() {
+		    var n = new Date()
+		    console.log((last - n) + ' ms');
+		    last = n;
+		});
+    }
+
+</script>
+</head>
+<body>
+	<div class="header" id="myHeader">
+		<script type="text/javascript">
+			window.onscroll = function() {myFunction()};
+			var header = document.getElementById("myHeader");
+			var sticky = header.offsetTop;
+			function myFunction() {
+			  if (window.pageYOffset > sticky) {
+			    header.classList.add("sticky");
+			  } else {
+			    header.classList.remove("sticky");
+			  }
+			}
+		</script>
+		<center>
+  			<label id="minutes">00</label><label>:</label><label id="seconds">00</label>
+		</center> 
+	</div>
+	<section class='apply-container'>
+		<div>
+			<input id="start" type="button" value="Start" class='button' onclick="start('nt')">
+		</div>	
+	    <form>
+	    <div class="form">
+	      <div class="column1">
+	      	<div>
+	        	<input id="nt" type="text" name='name' placeholder="Enter name" disabled="true" size="20">
+				<input id="start" type="button" value="Next" class='button' onclick="EnableDisableTextBox('nt1')">
+	      	</div>
+	        <br>
+	        <div>
+		        <input id="nt1" type="email" name='email' placeholder="Enter email address" disabled="true">
+		        <input id="start" type="button" value="Next" class='button' onclick="EnableDisableTextBox('nt2')">
+	      	</div>
+	        <br>
+	        <div>
+		        <input id="nt2" type="number" name='phone' placeholder="Enter mobile number" disabled="true">
+		        <input id="start" type="button" value="Next" class='button' onclick="EnableDisableTextBox('nt3')">
+	      	</div>
+	        <br>
+	        <div>
+	        	<input id="nt3" type="text" name='pancard' placeholder="Enter PAN number" disabled="true">
+	        	<input id="start" type="button" value="Next" class='button' onclick="EnableDisableTextBox('nt4')">
+	      	</div>
+	        <br>
+	        <div>
+	        	<input id="nt4" type="text" name='city' placeholder="Enter city" disabled="true">
+	        	<input id="start" type="button" value="Next" class='button' onclick="EnableDisableTextBox('nt5')">
+	      	</div>
+	        <br>
+	        <div>
+	        	<input id="nt5" type="text" name="state" placeholder="Enter State" disabled="true">
+	        	<input id="start" type="button" value="Next" class='button' onclick="EnableDisableTextBox('nt6')">
+	      	</div>
+	        <br>
+	        <div>
+	        	<input id="nt6" type="number" name="loanAmount" placeholder="Loan Amount Required" disabled="true">
+	        	<input id="start" type="button" value="Next" class='button' onclick="EnableDisableTextBox('nt7')">
+	      	</div>
+	        <br>
+	        <div>
+	        	<input id="nt7" type="number" name="aadhaar" placeholder="Enter Aadhaar nummber" disabled="true">
+	        	<input id="start" type="button" value="Next" class='button' onclick="EnableDisableTextBox('nt8')">
+	      	</div>
+	        <br> 
+	    </div>
+	    </div>
+	        <input type="submit" value="Stop" class='button'>
+	    </form>
+	</section>
+</body>
+</html>
