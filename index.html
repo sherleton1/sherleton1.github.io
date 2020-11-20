@@ -3,7 +3,9 @@
 <meta charset="utf-8">
 <title>KDD Typing Style</title>
 <link rel='stylesheet' href='design.css' type='text/css' />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 	document.addEventListener('DOMContentLoaded', () => {
 	    'use strict';
@@ -12,7 +14,7 @@
 	    let lastKeyTime = Date.now();
 
 	    document.addEventListener('keydown', event => {
-	        const charList = 'abcdefghijklmnopqrstuvwxyz0123456789';
+	        const charList = 'abcdefghijklmnopqrstuvwxyz0123456789@\'" -!$%&*()?/\\\;:+=_{}[].,<>|`~';
 	        const key = event.key.toLowerCase();
 
 	        // we are only interested in alphanumeric keys
@@ -26,35 +28,55 @@
 	        console.log(buffer);
 	    });
 	});
+
+// 	$("#nt").on('keydown', 'input', function (event) {
+// 	    if (event.which == 13) {
+// 	        console.log(document.getElementById('nt').value);
+// 	        document.getElementById('nt').value = '';
+//     }
+// });
+
 </script>
 <script type="text/javascript">
+	var x = 0;
+	function show(index) {
+		var globalArray = ["sddssdsdsd", "sdsdsddddd1223", "1212222"];
+    	console.log(globalArray[index]);
+    	document.getElementById("hshow").innerHTML = globalArray[index];
+    }
+
 	function EnableDisableTextBox(str) {
         var txtPassportNumber = document.getElementById(str);
         txtPassportNumber.removeAttribute("disabled");
    		pressTime(str);
    		nextKeyTime(str);
+   		show(0);
     }
+
     function start(str) {
-    	var txtPassportNumber = document.getElementById(str);
-        txtPassportNumber.removeAttribute("disabled");
-        var minutesLabel = document.getElementById("minutes");
-		var secondsLabel = document.getElementById("seconds");
-		var totalSeconds = 0;
-		setInterval(setTime, 1000);
+	    if (x == 0) {
+	    	x = 1;
+	    	var txtPassportNumber = document.getElementById(str);
+	        txtPassportNumber.removeAttribute("disabled");
+	        var minutesLabel = document.getElementById("minutes");
+			var secondsLabel = document.getElementById("seconds");
+			var totalSeconds = 0;
+			setInterval(setTime, 1000);
 
-		function setTime() {
-		  ++totalSeconds;
-		  secondsLabel.innerHTML = pad(totalSeconds % 60);
-		  minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
-		}
+			function setTime() {
+			  ++totalSeconds;
+			  secondsLabel.innerHTML = pad(totalSeconds % 60);
+			  minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+			}
 
-		function pad(val) {
-		  var valString = val + "";
-		  if (valString.length < 2) {
-		    return "0" + valString;
-		  } else {
-		    return valString;
-		  }
+			function pad(val) {
+			  var valString = val + "";
+			  if (valString.length < 2) {
+			    return "0" + valString;
+			  } else {
+			    return valString;
+			  }
+			}
 		}
 		pressTime(str);
 		nextKeyTime(str);
@@ -112,73 +134,47 @@
 </script>
 </head>
 <body>
-	<div class="header" id="myHeader">
-		<script type="text/javascript">
-			window.onscroll = function() {myFunction()};
-			var header = document.getElementById("myHeader");
-			var sticky = header.offsetTop;
-			function myFunction() {
-			  if (window.pageYOffset > sticky) {
-			    header.classList.add("sticky");
-			  } else {
-			    header.classList.remove("sticky");
-			  }
-			}
-		</script>
-		<center>
-  			<label id="minutes">00</label><label>:</label><label id="seconds">00</label>
-		</center> 
-	</div>
+	<header>
+		
+		<div class="header" id="myHeader">
+			<script type="text/javascript">
+				window.onscroll = function() {myFunction()};
+				var header = document.getElementById("myHeader");
+				var sticky = header.offsetTop;
+				function myFunction() {
+				  if (window.pageYOffset > sticky) {
+				    header.classList.add("sticky");
+				  } else {
+				    header.classList.remove("sticky");
+				  }
+				}
+			</script>
+			<center>
+	  			<label id="minutes">00</label><label>:</label><label id="seconds">00</label>
+			</center> 
+		</div>
+	</header>
 	<section class='apply-container'>
-		<div>
+		<div style="margin-left: 4vw;">
 			<input id="start" type="button" value="Start" class='button' onclick="start('nt')">
-		</div>	
+		</div>
+		<div class="showText">
+			<h1 id="hshow"></h1>
+		</div>
 	    <form>
-	    <div class="form">
-	      <div class="column1">
-	      	<div>
-	        	<input id="nt" type="text" name='name' placeholder="Enter name" disabled="true" size="20">
-				<input id="start" type="button" value="Next" class='button' onclick="EnableDisableTextBox('nt1')">
+	    	<div>
+	        	<input id="nt" type="text" name="hello" placeholder="Your Input" disabled="true">
 	      	</div>
-	        <br>
-	        <div>
-		        <input id="nt1" type="email" name='email' placeholder="Enter email address" disabled="true">
-		        <input id="start" type="button" value="Next" class='button' onclick="EnableDisableTextBox('nt2')">
-	      	</div>
-	        <br>
-	        <div>
-		        <input id="nt2" type="number" name='phone' placeholder="Enter mobile number" disabled="true">
-		        <input id="start" type="button" value="Next" class='button' onclick="EnableDisableTextBox('nt3')">
-	      	</div>
-	        <br
->	        <div>
-	        	<input id="nt3" type="email" name='first email' placeholder="Enter First Email" disabled="true">
-	        	<input id="start" type="button" value="Next" class='button' onclick="EnableDisableTextBox('nt4')">
-	      	</div>
-	        <br>
-	        <div>
-	        	<input id="nt4" type="text" name='city' placeholder="Enter city" disabled="true">
-	        	<input id="start" type="button" value="Next" class='button' onclick="EnableDisableTextBox('nt5')">
-	      	</div>
-	        <br>
-	        <div>
-	        	<input id="nt5" type="text" name="state" placeholder="Enter State" disabled="true">
-	        	<input id="start" type="button" value="Next" class='button' onclick="EnableDisableTextBox('nt6')">
-	      	</div>
-	        <br>
-	        <div>
-	        	<input id="nt6" type="text" name="motto" placeholder="Enter your daily motto" disabled="true">
-	        	<input id="start" type="button" value="Next" class='button' onclick="EnableDisableTextBox('nt7')">
-	      	</div>
-	        <br>
-	        <div>
-	        	<input id="nt7" type="text" name="hello" placeholder="Enter Hello World" disabled="true">
-	        	<input id="start" type="button" value="Next" class='button' onclick="EnableDisableTextBox('nt8')">
-	      	</div>
-	        <br> 
-	    </div>
-	    </div>
-	        <input type="submit" value="Stop" class='button'>
+	      	<script type="text/javascript">
+	      			var input = document.getElementById('nt');
+					input.addEventListener("keyup", function(event) {
+					  if (event.keyCode === 13) {
+					    event.preventDefault();
+					    console.log(document.getElementById('nt').value);
+					  }
+					});
+	      	</script>
+	        <input type="submit" value="Stop" class='button' style="margin-left: 4vw;">
 	    </form>
 	</section>
 </body>
